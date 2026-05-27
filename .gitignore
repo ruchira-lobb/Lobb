@@ -37,9 +37,7 @@ fastlane/Preview.html
 fastlane/screenshots/**
 fastlane/test_output/**
 
-# Misc
-.env
-.env.*
+
 
 # Expo (if used)
 .expo/
