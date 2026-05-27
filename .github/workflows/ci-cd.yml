@@ -1,0 +1,59 @@
+name: React Native CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  build:
+    name: Build Stage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Verify Build
+        run: npx react-native config
+
+  test:
+    name: Test Stage
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Jest Tests
+        run: npm test -- --watchAll=false
+
+  deploy:
+    name: Deploy Stage
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Fake Deploy Step
+        run: echo "Deploying application..."
